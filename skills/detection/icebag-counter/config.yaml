@@ -1,0 +1,45 @@
+# Default configuration for icebag-counter skill
+
+model:
+  model_path: "models/icebag_yolo26.onnx"
+  model_format: "auto"   # auto|tensorrt|onnx|pytorch
+  device: "auto"         # auto|cuda|cpu
+  confidence: 0.5
+  iou: 0.45
+  class_ids: [0]         # class ids to detect (icebag usually class 0 in custom model)
+  resize: [640, 640]     # model input size (H, W) if needed
+
+tracking:
+  enabled: true
+  type: "bytetrack"      # bytetrack | deepocsort | strongsort | botsort | ocsort | none
+  # tracker-specific params (defaults)
+  bytetrack:
+    frame_rate: 30
+    track_thresh: 0.5
+    match_thresh: 0.6
+    track_buffer: 30
+
+filtering:
+  # Size filters for candidates (change to match your dataset)
+  min_w: 0
+  max_w: 99999
+  min_h: 0
+  max_h: 99999
+
+counting:
+  # Specify multiple zones (each zone: id,type,coords,direction)
+  zones:
+    - id: "door_line"
+      type: "line"
+      coords: [[100,200],[600,200]]
+      direction: "both"   # both|in|out
+    # Example polygon:
+    # - id: "drop_zone"
+    #   type: "polygon"
+    #   coords: [[x1,y1],[x2,y2],[x3,y3]]
+  debounce_frames: 10
+  polygon_cooldown: 180.0  # seconds before clearing polygon occupied state
+
+logging:
+  perf_interval_frames: 50
+  verbose: true

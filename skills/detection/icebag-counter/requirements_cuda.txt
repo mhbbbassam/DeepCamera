@@ -1,0 +1,11 @@
+# core
+ultralytics>=8.3.0
+numpy
+opencv-python
+pyyaml
+
+# runtime acceleration
+onnxruntime-gpu
+
+# tracker implementations (install or vendor as needed)
+# e.g. bytetrack-pytorch or a boxmot package if available
