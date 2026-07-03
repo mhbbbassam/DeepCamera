@@ -3,7 +3,7 @@ name: icebag-counter
 description: "Icebag Counting Skill — custom YOLO26 detector + ByteTrack + line/zone counting"
 version: 1.0.0
 icon: assets/icon.png
-entry: scripts/detect.py
+entry: scripts/run_skill.bat
 deploy: deploy.sh
 
 requirements:
@@ -63,6 +63,13 @@ parameters:
     default: "bytetrack"
     group: Features
 
+  - name: venv_path
+    label: "Python virtualenv path"
+    type: string
+    default: "D:\\commange\\venv"
+    description: "Full path to the Python venv to use for this skill (Windows). If empty, skill will try to use an internal .venv or create one."
+    group: Environment
+
   - name: line_coords
     label: "Counting line (x1,y1;x2,y2)"
     type: string
@@ -70,14 +77,8 @@ parameters:
     description: "Example: 100,200;600,200"
     group: Counting
 
-  - name: polygon_coords
-    label: "Counting polygon (x1,y1;x2,y2;...)"
-    type: string
-    default: ""
-    group: Counting
-
 capabilities:
   live_detection:
-    script: scripts/detect.py
-    description: "Detects icebag objects, tracks them and emits counting events"
+    script: scripts/run_skill.bat
+    description: "Detects icebag objects, tracks them and emits counting events (runs under configured venv)"
 ---
